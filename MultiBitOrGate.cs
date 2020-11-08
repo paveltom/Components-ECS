@@ -32,7 +32,27 @@ namespace Components
 
         public override bool TestGate()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < m_wsInput.Size; i++)
+            {
+                m_wsInput[i].Value = 0;
+            }
+            if (Output.Value != 0) return false;
+
+            for (int i = 0; i < m_wsInput.Size; i++)
+            {
+                m_wsInput[i].Value = 1;
+                if (Output.Value != 1) return false;
+                m_wsInput[i].Value = 0;
+            }
+
+            for (int i = 0; i < m_wsInput.Size; i++)
+            {
+                m_wsInput[i].Value = 1;
+            }
+            if (Output.Value != 1) return false;
+
+
+            return true;
         }
     }
 }
