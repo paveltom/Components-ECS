@@ -13,16 +13,23 @@ namespace Components
         public WireSet Output2 { get; private set; }
         public WireSet Input { get; private set; }
         public Wire Control { get; private set; }
-
-        //your code here
+        public Demux[] m_gDemux;
 
         public BitwiseDemux(int iSize)
         {
             Size = iSize;
             Control = new Wire();
             Input = new WireSet(Size);
-
-            //your code here
+            Output1 = new WireSet(Size);
+            Output2 = new WireSet(Size);
+            m_gDemux = new Demux[Size];
+            for (int i = 0; i < Size; i++)
+            {
+                m_gDemux[i].ConnectInput(Input[i]);
+                Output1[i].ConnectInput(m_gDemux[i].Output1);
+                Output2[i].ConnectInput(m_gDemux[i].Output2);
+                m_gDemux[i].ConnectControl(Control);
+            }
         }
 
         public void ConnectControl(Wire wControl)
@@ -36,7 +43,30 @@ namespace Components
 
         public override bool TestGate()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < Size; i++)
+            {
+                Input[i].Value = 0;
+                Control.Value = 0;
+                if ((Output1[i].Value != 0) || (Output2[i].Value != 0))
+                    return false;
+
+                Input[i].Value = 0;
+                Control.Value = 1;
+                if ((Output1[i].Value != 0) || (Output2[i].Value != 0))
+                    return false;
+
+                Input[i].Value = 1;
+                Control.Value = 0;
+                if ((Output1[i].Value != 1) || (Output2[i].Value != 0))
+                    return false;
+
+                Input[i].Value = 1;
+                Control.Value = 1;
+                if ((Output1[i].Value != 0) || (Output2[i].Value != 1))
+                    return false;
+
+            }
+            return true;
         }
     }
 }

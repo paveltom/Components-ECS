@@ -13,9 +13,6 @@ namespace Components
         public BitwiseAndGate(int iSize)
             : base(iSize)
         {
-            //your code here
-
-
             m_gAnd = new AndGate[iSize];
             for (int i = 0; i < iSize; i++)
                 m_gAnd[i] = new AndGate();
@@ -23,7 +20,7 @@ namespace Components
             {
                 m_gAnd[i].ConnectInput1(Input1[i]);
                 m_gAnd[i].ConnectInput2(Input2[i]);
-                Output[i].ConnectOutput(m_gAnd[i].Output);
+                Output[i].ConnectInput(m_gAnd[i].Output);                
             }
 
         }
@@ -39,16 +36,23 @@ namespace Components
         {
             for (int i = 0; i < m_gAnd.Length; i++)
             {
-                m_gAnd[0].Input1.Value = 1;
-                m_gAnd[0].Input1.Value = 1;
+                m_gAnd[i].Input1.Value = 1;
+                m_gAnd[i].Input1.Value = 1;
                 if (Output[i].Value != 1)
                     return false;
-            }
 
-            for (int i = 0; i < m_gAnd.Length; i++)
-            {
-                m_gAnd[0].Input1.Value = 0;
-                m_gAnd[0].Input1.Value = 0;
+                m_gAnd[i].Input1.Value = 0;
+                m_gAnd[i].Input1.Value = 0;
+                if (Output[i].Value != 0)
+                    return false;
+
+                m_gAnd[i].Input1.Value = 1;
+                m_gAnd[i].Input1.Value = 0;
+                if (Output[i].Value != 0)
+                    return false;
+
+                m_gAnd[i].Input1.Value = 0;
+                m_gAnd[i].Input1.Value = 1;
                 if (Output[i].Value != 0)
                     return false;
             }

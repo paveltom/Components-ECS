@@ -10,14 +10,22 @@ namespace Components
     {
         public Wire ControlInput { get; private set; }
 
-        //your code here
+        public MuxGate[] m_gMux;
 
         public BitwiseMux(int iSize)
             : base(iSize)
         {
 
             ControlInput = new Wire();
-            //your code here
+
+            m_gMux = new MuxGate[Size];
+            for (int i = 0; i < Size; i++)
+            {
+                m_gMux[i].ConnectInput1(Input1[i]);
+                m_gMux[i].ConnectInput2(Input2[i]);
+                Output[i].ConnectInput(m_gMux[i].Output);
+                m_gMux[i].ConnectControl(ControlInput);
+            }
 
         }
 
@@ -38,7 +46,34 @@ namespace Components
 
         public override bool TestGate()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < Size; i++)
+            {
+                Input1[i].Value = 0;
+                Input2[i].Value = 1;
+                ControlInput.Value = 0;
+                if (Output[i].Value != 0)
+                    return false;
+
+                Input1[i].Value = 1;
+                Input2[i].Value = 0;
+                ControlInput.Value = 1;
+                if (Output[i].Value != 0)
+                    return false;
+
+                Input1[i].Value = 1;
+                Input2[i].Value = 0;
+                ControlInput.Value = 0;
+                if (Output[i].Value != 1)
+                    return false;
+
+                Input1[i].Value = 0;
+                Input2[i].Value = 1;
+                ControlInput.Value = 1;
+                if (Output[i].Value != 1)
+                    return false;
+            }
+
+            return true;
         }
     }
 }
