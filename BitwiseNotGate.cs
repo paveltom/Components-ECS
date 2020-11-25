@@ -23,6 +23,7 @@ namespace Components
             m_gNot = new NotGate[Size];
             for (int i = 0; i < Size; i++)
             {
+                m_gNot[i] = new NotGate();
                 m_gNot[i].ConnectInput(Input[i]);
                 Output[i].ConnectInput(m_gNot[i].Output);
             }

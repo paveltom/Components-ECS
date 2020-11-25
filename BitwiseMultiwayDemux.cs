@@ -48,7 +48,7 @@ namespace Components
             {
                 Outputs[currOutputsToConnect].ConnectInput(m_gBitwiseDemux[currGateToConnect].Output2);
                 Outputs[currOutputsToConnect - 1].ConnectInput(m_gBitwiseDemux[currGateToConnect].Output1);
-                m_gBitwiseDemux[currGateToConnect].ConnectControl(Control[cControlBits-level]);
+                m_gBitwiseDemux[currGateToConnect].ConnectControl(Control[level - 1]);
                 currGateToConnect--;
                 currOutputsToConnect -= 2;
             }
@@ -62,7 +62,7 @@ namespace Components
                 {
                     m_gBitwiseDemux[previousGatesIndex].ConnectInput(m_gBitwiseDemux[currGateToConnect].Output2);
                     m_gBitwiseDemux[previousGatesIndex-1].ConnectInput(m_gBitwiseDemux[currGateToConnect].Output1);
-                    m_gBitwiseDemux[currGateToConnect].ConnectControl(Control[cControlBits - level]);
+                    m_gBitwiseDemux[currGateToConnect].ConnectControl(Control[level - 1]);
                     currGateToConnect--;
                     previousGatesIndex -= 2;
                 }
