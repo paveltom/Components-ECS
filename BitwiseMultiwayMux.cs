@@ -94,11 +94,8 @@ namespace Components
 
             for (int i = 0; i < Inputs.Length; i++)
             {
-                for (int j = 0; j < Size; j++) // current input becomes 'active'
-                    Inputs[i][j].Value = 1;
-
                 int deciNum = i;
-                for (int k = 0; k < Control.Size; k++) //decoding control bits from decimal to binary
+                for (int k = 0; k < Control.Size; k++) //control bits: decoding decimal to binary
                 { 
                     if (deciNum != 0)
                     {
@@ -108,13 +105,16 @@ namespace Components
                     else Control[i].Value = 0;
                 }
 
-                // if () statement in the for loop, to verify output values
+                //verifying output values
                 for (int k = 0; k < Size; k++)
+                {
+                    Inputs[i][k].Value = 1; // current input becomes 'active'
                     if (Output[k].Value != 1)
                         return false;
-
-                for (int j = 0; j < Size; j++) // current input becomes 'not active'
-                    Inputs[i][j].Value = 0;
+                    Inputs[i][k].Value = 0; // current input becomes 'not active'
+                    if (Output[k].Value != 0)
+                        return false;
+                }
             }
 
             return true;

@@ -39,7 +39,7 @@ namespace Components
             for (int i = 0; i < m_gBitwiseDemux.Length; i++)
                 m_gBitwiseDemux[i] = new BitwiseDemux(Size);
 
-            int currOutputsToConnect = Outputs.Length;
+            int currOutputsToConnect = Outputs.Length - 1;
             int currGateToConnect = numOfOutputs - 2;
             int level = 1;
             int currNumOfGates = (int)Math.Pow(2, (numOfOutputs - level));
@@ -84,7 +84,35 @@ namespace Components
 
         public override bool TestGate()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < Input.Size; i++)           
+                Input[i].Value = 0;
+                       
+            for (int i = 0; i < Outputs.Length; i++)
+            {
+                int deciNum = i;
+                for (int k = 0; k < Control.Size; k++) //decoding control bits from decimal to binary
+                {
+                    if (deciNum != 0)
+                    {
+                        Control[i].Value = deciNum % 2;
+                        deciNum = deciNum / 2;
+                    }
+                    else Control[i].Value = 0;
+                }
+
+                //verifying output values
+                for (int j = 0; j < Size; j++)
+                {
+                    Input[j].Value = 1;
+                    if (Outputs[i][j].Value != 1)
+                        return false;
+                    Input[j].Value = 0;
+                    if (Outputs[i][j].Value != 0)
+                        return false;
+                }
+            }
+
+            return true;
         }
     }
 }
