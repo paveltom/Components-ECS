@@ -57,7 +57,7 @@ namespace Components
 
             for (level = 2; level <= numOfOutputs; level++) // connectig gates' outputs to next level gates' inputs
             {
-                currNumOfGates = (int)Math.Pow(2, (numOfOutputs - level));
+                currNumOfGates = currNumOfGates / 2;
                 for (int j = 0; j < currNumOfGates; j++) //connecting all the inputs to gates
                 {
                     m_gBitwiseDemux[previousGatesIndex].ConnectInput(m_gBitwiseDemux[currGateToConnect].Output2);
