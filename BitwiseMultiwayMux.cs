@@ -48,7 +48,7 @@ namespace Components
             {
                 m_gBitwiseMux[currGateToConnect].ConnectInput1(Inputs[currInputsToConnect]);
                 m_gBitwiseMux[currGateToConnect].ConnectInput2(Inputs[currInputsToConnect + 1]);
-                m_gBitwiseMux[currGateToConnect].ConnectControl(Control[level]);
+                m_gBitwiseMux[currGateToConnect].ConnectControl(Control[level-1]);
                 currGateToConnect++;
                 currInputsToConnect += 2;
             }
@@ -62,7 +62,7 @@ namespace Components
                 {
                     m_gBitwiseMux[currGateToConnect].ConnectInput1(m_gBitwiseMux[previousGatesIndex].Output);
                     m_gBitwiseMux[currGateToConnect].ConnectInput2(m_gBitwiseMux[previousGatesIndex + 1].Output);
-                    m_gBitwiseMux[currGateToConnect].ConnectControl(Control[level]);
+                    m_gBitwiseMux[currGateToConnect].ConnectControl(Control[level-1]);
                     currGateToConnect++;
                     previousGatesIndex += 2;
                 }

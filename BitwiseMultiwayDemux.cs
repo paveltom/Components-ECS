@@ -33,22 +33,22 @@ namespace Components
             }
             //your code here
 
-            int numOfOutputs = (int)Math.Pow(2, cControlBits);
+            int numOfOutputs = Outputs.Length;
             m_gBitwiseDemux = new BitwiseDemux[numOfOutputs - 1];
-
             for (int i = 0; i < m_gBitwiseDemux.Length; i++)
                 m_gBitwiseDemux[i] = new BitwiseDemux(Size);
 
             int currOutputsToConnect = Outputs.Length - 1;
-            int currGateToConnect = numOfOutputs - 2;
+            int currGateToConnect = m_gBitwiseDemux.Length - 1;
             int level = 1;
-            int currNumOfGates = (int)Math.Pow(2, (numOfOutputs - level));
+            int currNumOfGates = numOfOutputs / 2;
 
 
             for (int j = 0; j < currNumOfGates; j++) //connecting all the last level gates to outputs
             {
                 Outputs[currOutputsToConnect].ConnectInput(m_gBitwiseDemux[currGateToConnect].Output2);
                 Outputs[currOutputsToConnect - 1].ConnectInput(m_gBitwiseDemux[currGateToConnect].Output1);
+                m_gBitwiseDemux[currGateToConnect].ConnectControl(Control[cControlBits-level]);
                 currGateToConnect--;
                 currOutputsToConnect -= 2;
             }
@@ -62,6 +62,7 @@ namespace Components
                 {
                     m_gBitwiseDemux[previousGatesIndex].ConnectInput(m_gBitwiseDemux[currGateToConnect].Output2);
                     m_gBitwiseDemux[previousGatesIndex-1].ConnectInput(m_gBitwiseDemux[currGateToConnect].Output1);
+                    m_gBitwiseDemux[currGateToConnect].ConnectControl(Control[cControlBits - level]);
                     currGateToConnect--;
                     previousGatesIndex -= 2;
                 }
