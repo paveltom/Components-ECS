@@ -33,7 +33,7 @@ namespace Components
                 Inputs[i] = new WireSet(Size);
             }
 
-            int numOfInputs = (int)Math.Pow(2, cControlBits);
+            int numOfInputs = Inputs.Length;
             m_gBitwiseMux = new BitwiseMux[numOfInputs - 1];
             for (int i = 0; i < m_gBitwiseMux.Length; i++)
                 m_gBitwiseMux[i] = new BitwiseMux(Size);
@@ -41,13 +41,14 @@ namespace Components
             int currInputsToConnect = 0;
             int currGateToConnect = 0;
             int level = 1;
-            int currNumOfGates = (int)Math.Pow(2, (numOfInputs - level));
+            int currNumOfGates = numOfInputs / 2;
 
 
             for (int j = 0; j < currNumOfGates; j++) //connecting all the inputs to gates
             {
                 m_gBitwiseMux[currGateToConnect].ConnectInput1(Inputs[currInputsToConnect]);
                 m_gBitwiseMux[currGateToConnect].ConnectInput2(Inputs[currInputsToConnect + 1]);
+                m_gBitwiseMux[currGateToConnect].ConnectControl(Control[level]);
                 currGateToConnect++;
                 currInputsToConnect += 2;
             }
@@ -56,11 +57,12 @@ namespace Components
 
             for (level = 2; level <= numOfInputs; level++) // connectig gates' outputs to next level gates' inputs
             {
-                currNumOfGates = (int)Math.Pow(2, (numOfInputs - level));
+                currNumOfGates = currNumOfGates / 2;
                 for (int j = 0; j < currNumOfGates; j++)
                 {
                     m_gBitwiseMux[currGateToConnect].ConnectInput1(m_gBitwiseMux[previousGatesIndex].Output);
                     m_gBitwiseMux[currGateToConnect].ConnectInput2(m_gBitwiseMux[previousGatesIndex + 1].Output);
+                    m_gBitwiseMux[currGateToConnect].ConnectControl(Control[level]);
                     currGateToConnect++;
                     previousGatesIndex += 2;
                 }
