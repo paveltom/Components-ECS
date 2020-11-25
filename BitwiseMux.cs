@@ -15,12 +15,12 @@ namespace Components
         public BitwiseMux(int iSize)
             : base(iSize)
         {
-
             ControlInput = new Wire();
 
             m_gMux = new MuxGate[Size];
             for (int i = 0; i < Size; i++)
             {
+                m_gMux[i] = new MuxGate();
                 m_gMux[i].ConnectInput1(Input1[i]);
                 m_gMux[i].ConnectInput2(Input2[i]);
                 Output[i].ConnectInput(m_gMux[i].Output);

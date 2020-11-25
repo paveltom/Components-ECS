@@ -25,6 +25,7 @@ namespace Components
             m_gDemux = new Demux[Size];
             for (int i = 0; i < Size; i++)
             {
+                m_gDemux[i] = new Demux();
                 m_gDemux[i].ConnectInput(Input[i]);
                 Output1[i].ConnectInput(m_gDemux[i].Output1);
                 Output2[i].ConnectInput(m_gDemux[i].Output2);
