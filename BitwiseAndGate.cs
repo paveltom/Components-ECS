@@ -37,22 +37,22 @@ namespace Components
             for (int i = 0; i < m_gAnd.Length; i++)
             {
                 m_gAnd[i].Input1.Value = 1;
-                m_gAnd[i].Input1.Value = 1;
+                m_gAnd[i].Input2.Value = 1;
                 if (Output[i].Value != 1)
                     return false;
 
                 m_gAnd[i].Input1.Value = 0;
-                m_gAnd[i].Input1.Value = 0;
+                m_gAnd[i].Input2.Value = 0;
                 if (Output[i].Value != 0)
                     return false;
 
                 m_gAnd[i].Input1.Value = 1;
-                m_gAnd[i].Input1.Value = 0;
+                m_gAnd[i].Input2.Value = 0;
                 if (Output[i].Value != 0)
                     return false;
 
                 m_gAnd[i].Input1.Value = 0;
-                m_gAnd[i].Input1.Value = 1;
+                m_gAnd[i].Input2.Value = 1;
                 if (Output[i].Value != 0)
                     return false;
             }

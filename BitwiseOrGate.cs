@@ -36,22 +36,22 @@ namespace Components
             for (int i = 0; i < m_gOr.Length; i++)
             {
                 m_gOr[i].Input1.Value = 1;
-                m_gOr[i].Input1.Value = 0;
+                m_gOr[i].Input2.Value = 0;
                 if (Output[i].Value != 1)
                     return false;
 
                 m_gOr[i].Input1.Value = 0; 
-                m_gOr[i].Input1.Value = 1;
+                m_gOr[i].Input2.Value = 1;
                 if (Output[i].Value != 1)
                     return false;
 
                 m_gOr[i].Input1.Value = 1;
-                m_gOr[i].Input1.Value = 1;
+                m_gOr[i].Input2.Value = 1;
                 if (Output[i].Value != 1)
                     return false;
 
                 m_gOr[i].Input1.Value = 0;
-                m_gOr[i].Input1.Value = 0;
+                m_gOr[i].Input2.Value = 0;
                 if (Output[i].Value != 0)
                     return false;
             }
