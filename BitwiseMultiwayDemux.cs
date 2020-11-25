@@ -95,10 +95,10 @@ namespace Components
                 {
                     if (deciNum != 0)
                     {
-                        Control[i].Value = deciNum % 2;
+                        Control[k].Value = deciNum % 2;
                         deciNum = deciNum / 2;
                     }
-                    else Control[i].Value = 0;
+                    else Control[k].Value = 0;
                 }
 
                 //verifying output values
