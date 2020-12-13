@@ -74,6 +74,18 @@ namespace Components
             ha.Input1.ConnectInput(in1);
             ha.Input2.ConnectInput(in2);
             Console.WriteLine(ha.ToString());
+            Console.WriteLine();
+            Console.WriteLine("Inner test result: " + ha.TestGate());
+            Console.WriteLine("============================================================================");
+            Console.WriteLine();
+            Console.WriteLine("============================================================================");
+            Console.WriteLine();
+            Console.WriteLine("FullAdder tests:");
+            FullAdder fa = new FullAdder();
+            Console.WriteLine("Inner test result: " + fa.TestGate());
+
+
+
 
 
 
