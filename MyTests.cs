@@ -27,27 +27,55 @@ namespace Components
             //Console.WriteLine();
 
 
-            Console.WriteLine("Wireset.Set2sComplement() test:");
-            Console.Write("Enter the num of bits: ");
-            int numOfBits2 = Convert.ToInt32(Console.ReadLine());
-            WireSet wire2 = new WireSet(numOfBits2);
-            Console.Write("Enter a num between -" + (int)Math.Pow(2, numOfBits2 - 1) + " and " + ((int)Math.Pow(2, numOfBits2 - 1) - 1) + " to convert into binary: ");
-            string input = Console.ReadLine();
-            int userNum2 = 1;
-            if (input[0] == '-')
-            {
-                input = input.TrimStart('-');
-                userNum2 = -1;
-            }        
-            userNum2 = userNum2 * (Convert.ToInt32(input));
-            wire2.Set2sComplement(userNum2);
-            Console.WriteLine("Your number binary representation: " + wire2.ToString());
-            Console.WriteLine();
+            //Console.WriteLine("Wireset.Set2sComplement() test:");
+            //Console.Write("Enter the num of bits: ");
+            //int numOfBits2 = Convert.ToInt32(Console.ReadLine());
+            //WireSet wire2 = new WireSet(numOfBits2);
+            //Console.Write("Enter a num between -" + (int)Math.Pow(2, numOfBits2 - 1) + " and " + ((int)Math.Pow(2, numOfBits2 - 1) - 1) + " to convert into binary: ");
+            //string input = Console.ReadLine();
+            //int userNum2 = 1;
+            //if (input[0] == '-')
+            //{
+            //    input = input.TrimStart('-');
+            //    userNum2 = -1;
+            //}        
+            //userNum2 = userNum2 * (Convert.ToInt32(input));
+            //wire2.Set2sComplement(userNum2);
+            //Console.WriteLine("Your number binary representation: " + wire2.ToString());
+            //Console.WriteLine();
 
-            Console.WriteLine("Wireset.Get2sComplement() test:");
-            Console.WriteLine("Your number decimal representation (expected value: " + userNum2 + "): " + wire2.Get2sComplement());
+            //Console.WriteLine("Wireset.Get2sComplement() test:");
+            //Console.WriteLine("Your number decimal representation (expected value: " + userNum2 + "): " + wire2.Get2sComplement());
+            //Console.WriteLine("============================================================================");
+            //Console.WriteLine();
             Console.WriteLine("============================================================================");
             Console.WriteLine();
+            Console.WriteLine("HalfAdder tests:");
+            HalfAdder ha = new HalfAdder();
+            Wire in1 = new Wire();
+            Wire in2 = new Wire();
+            in1.Value = 0;
+            in2.Value = 0;
+            ha.Input1.ConnectInput(in1);
+            ha.Input2.ConnectInput(in2);
+            Console.WriteLine(ha.ToString());
+            ha = new HalfAdder();
+            in1.Value = 1;
+            ha.Input1.ConnectInput(in1);
+            ha.Input2.ConnectInput(in2);
+            Console.WriteLine(ha.ToString());
+            ha = new HalfAdder();
+            in2.Value = 1;
+            ha.Input1.ConnectInput(in1);
+            ha.Input2.ConnectInput(in2);
+            Console.WriteLine(ha.ToString());
+            ha = new HalfAdder();
+            in1.Value = 0;
+            ha.Input1.ConnectInput(in1);
+            ha.Input2.ConnectInput(in2);
+            Console.WriteLine(ha.ToString());
+
+
 
 
 
