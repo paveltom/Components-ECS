@@ -24,11 +24,11 @@ namespace Components
 
             m_xorGate.Input1.ConnectInput(Input1);
             m_xorGate.Input2.ConnectInput(Input2);
-            Output = m_xorGate.Output;
+            Output.ConnectInput(m_xorGate.Output);
 
             m_andGate.Input1.ConnectInput(Input1);
             m_andGate.Input2.ConnectInput(Input2);
-            CarryOutput = m_andGate.Output;
+            CarryOutput.ConnectInput(m_andGate.Output);
         }
 
 
