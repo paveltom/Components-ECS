@@ -43,7 +43,7 @@ namespace Components
         //Transform a positive integer value into binary and set the wires accordingly, with 0 being the LSB
         public void SetValue(int iValue)
         {
-            for (int k = 0; k < m_aWires.Length-1; k++) 
+            for (int k = 0; k < m_aWires.Length; k++) 
             {
                 if (iValue != 0)
                 {
@@ -52,7 +52,6 @@ namespace Components
                 }
                 else m_aWires[k].Value = 0;
             }
-            m_aWires[m_aWires.Length - 1].Value = 0; //LSB
         }
 
         //Transform the binary code into a positive integer
@@ -70,7 +69,34 @@ namespace Components
         //Transform an integer value into binary using 2`s complement and set the wires accordingly, with 0 being the LSB
         public void Set2sComplement(int iValue)
         {
-            throw new NotImplementedException();
+            SetValue(Math.Abs(iValue));
+            if (iValue < 0)
+            {
+                for(int i = 0; i < m_aWires.Length; i++) //reversing the bits
+                {
+                    if (m_aWires[i].Value == 0)
+                        m_aWires[i].Value = 1;
+                    else m_aWires[i].Value = 0;
+                }
+
+                if (m_aWires[0].Value == 0) // adding 1
+                    m_aWires[0].Value = 1;
+                else
+                {
+                    for (int i = 0; i < m_aWires.Length; i++)
+                    {
+                        if (m_aWires[i].Value == 1)
+                            m_aWires[i].Value = 0;
+                        else
+                        {
+                            m_aWires[i].Value = 1;
+                            i = m_aWires.Length; //break
+                        }
+
+                    }
+                }
+
+            }
         }
 
         //Transform the binary code in 2`s complement into an integer
