@@ -57,8 +57,8 @@ namespace Components
         //Transform the binary code into a positive integer
         public int GetValue()
         {
-            int output = 0;
-            for (int i = 0; i < Size; i++)
+            int output = m_aWires[0].Value;
+            for (int i = 1; i < Size; i++)
             {
                 output = output + (int)Math.Pow((2 * m_aWires[i].Value), i);
             }
@@ -119,7 +119,11 @@ namespace Components
             {
                 int i = 0;
                 while (m_aWires[i].Value == 0)
+                {
+                    tempSet[i].Value = m_aWires[i].Value;
                     i++;
+                }
+                tempSet[i].Value = m_aWires[i].Value;
                 i++;
                 for (; i < Size; i++)  //reversing the bits
                 {
