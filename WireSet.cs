@@ -58,7 +58,13 @@ namespace Components
         //Transform the binary code into a positive integer
         public int GetValue()
         {
-            throw new NotImplementedException();
+            int output = 0;
+            for (int i = 0; i < m_aWires.Length; i++)
+            {
+                output = output + (int)Math.Pow((2 * m_aWires[i].Value), i);
+            }
+
+            return output;
         }
 
         //Transform an integer value into binary using 2`s complement and set the wires accordingly, with 0 being the LSB
