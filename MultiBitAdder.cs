@@ -72,11 +72,11 @@ namespace Components
                 Random rand = new Random();
                 int num1 = rand.Next((-(int)Math.Pow(2, bits - 1)), ((int)Math.Pow(2, bits - 1) - 1) + 1);
                 int num2 = rand.Next((-(int)Math.Pow(2, bits - 1)), ((int)Math.Pow(2, bits - 1) - 1) + 1);
-                int sum = num1 + num2;
+                WireSet sum = new WireSet(Size);
+                sum.Set2sComplement(num1+num2);
                 Input1.Set2sComplement(num1);
                 Input2.Set2sComplement(num2);
-                int result = Output.Get2sComplement();
-                if (result != sum)
+                if (Output.Get2sComplement() != sum.Get2sComplement())
                     return false;
             }
             return true;
