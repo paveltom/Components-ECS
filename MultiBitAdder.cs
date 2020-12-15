@@ -66,11 +66,12 @@ namespace Components
 
         public override bool TestGate()
         {
+            int bits = Size - 1;
             for (int i = 0; i < 10; i++)
             {
                 Random rand = new Random();
-                int num1 = rand.Next((-(int)Math.Pow(2, Size - 1)), ((int)Math.Pow(2, Size - 1) - 1) + 1);
-                int num2 = rand.Next((-(int)Math.Pow(2, Size - 1)), ((int)Math.Pow(2, Size - 1) - 1) + 1);
+                int num1 = rand.Next((-(int)Math.Pow(2, bits - 1)), ((int)Math.Pow(2, bits - 1) - 1) + 1);
+                int num2 = rand.Next((-(int)Math.Pow(2, bits - 1)), ((int)Math.Pow(2, bits - 1) - 1) + 1);
                 int sum = num1 + num2;
                 Input1.Set2sComplement(num1);
                 Input2.Set2sComplement(num2);
