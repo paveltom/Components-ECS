@@ -83,36 +83,116 @@ namespace Components
             //Console.WriteLine("FullAdder tests:");
             //FullAdder fa = new FullAdder();
             //Console.WriteLine("Inner test result: " + fa.TestGate());
+            //Console.WriteLine("============================================================================");
+            //Console.WriteLine();
+            //Console.WriteLine("MultiBitAdder tests:");
+            //bool loop = true;
+            //while (loop)
+            //{
+            //    Console.Write("Enter the num of bits (hit 'e' to exit): ");
+            //    string strIn = Console.ReadLine();
+            //    if (strIn == "e")
+            //        loop = false;
+            //    else
+            //    {
+            //        int numOfBits4 = Convert.ToInt32(strIn);
+            //        Console.Write("Enter first num between -" + (int)Math.Pow(2, numOfBits4 - 1) + " and " + ((int)Math.Pow(2, numOfBits4 - 1) - 1) + " to compute: ");
+            //        int userNum41 = Convert.ToInt32(Console.ReadLine());
+            //        Console.Write("Enter second num between -" + (int)Math.Pow(2, numOfBits4 - 1) + " and " + ((int)Math.Pow(2, numOfBits4 - 1) - 1) + " to compute: ");
+            //        int userNum42 = Convert.ToInt32(Console.ReadLine());
+
+
+            //        MultiBitAdder mba = new MultiBitAdder(numOfBits4);
+            //        WireSet in1 = new WireSet(numOfBits4);
+            //        WireSet in2 = new WireSet(numOfBits4);
+            //        in1.Set2sComplement(userNum41);
+            //        in2.Set2sComplement(userNum42);
+
+            //        mba.ConnectInput1(in1);
+            //        mba.ConnectInput2(in2);
+            //        Console.WriteLine("Computation: (" + mba.Input1.Get2sComplement() + ") + (" + mba.Input2.Get2sComplement() + ") = (" + mba.Output.Get2sComplement() + ")");
+
+            //        Console.WriteLine(mba);
+            //    }
+            //}
+
             Console.WriteLine("============================================================================");
             Console.WriteLine();
-            Console.WriteLine("MultiBitAdder tests:");
+            Console.WriteLine("ALU tests:");
             bool loop = true;
             while (loop)
             {
-                Console.Write("Enter the num of bits (hit 'e' to exit): ");
+                Console.Write("Enter the num of bits ('e' + 'enter' to exit the test loop): ");
                 string strIn = Console.ReadLine();
                 if (strIn == "e")
                     loop = false;
                 else
                 {
-                    int numOfBits4 = Convert.ToInt32(strIn);
-                    Console.Write("Enter first num between -" + (int)Math.Pow(2, numOfBits4 - 1) + " and " + ((int)Math.Pow(2, numOfBits4 - 1) - 1) + " to compute: ");
-                    int userNum41 = Convert.ToInt32(Console.ReadLine());
-                    Console.Write("Enter second num between -" + (int)Math.Pow(2, numOfBits4 - 1) + " and " + ((int)Math.Pow(2, numOfBits4 - 1) - 1) + " to compute: ");
-                    int userNum42 = Convert.ToInt32(Console.ReadLine());
+                    int numOfBits5 = Convert.ToInt32(strIn);
+                    Console.Write("Enter X input between -" + (int)Math.Pow(2, numOfBits5 - 1) + " and " + ((int)Math.Pow(2, numOfBits5 - 1) - 1) + " to compute: ");
+                    int userNum51 = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("Enter Y input between -" + (int)Math.Pow(2, numOfBits5 - 1) + " and " + ((int)Math.Pow(2, numOfBits5 - 1) - 1) + " to compute: ");
+                    int userNum52 = Convert.ToInt32(Console.ReadLine());
 
 
-                    MultiBitAdder mba = new MultiBitAdder(numOfBits4);
-                    WireSet in1 = new WireSet(numOfBits4);
-                    WireSet in2 = new WireSet(numOfBits4);
-                    in1.Set2sComplement(userNum41);
-                    in2.Set2sComplement(userNum42);
+                    WireSet in1 = new WireSet(numOfBits5);
+                    WireSet in2 = new WireSet(numOfBits5);
+                    in1.Set2sComplement(userNum51);
+                    in2.Set2sComplement(userNum52);
 
-                    mba.ConnectInput1(in1);
-                    mba.ConnectInput2(in2);
-                    Console.WriteLine("Computation: (" + mba.Input1.Get2sComplement() + ") + (" + mba.Input2.Get2sComplement() + ") = (" + mba.Output.Get2sComplement() + ")");
+                    Console.WriteLine();
+                    Console.WriteLine("your binary num1: " + in1);
+                    Console.WriteLine("your binary num2: " + in2);
+                    Console.WriteLine();
 
-                    Console.WriteLine(mba);
+                    ALU alu = new ALU(numOfBits5);
+                    //setting ALU properties:
+    
+                    alu.InputX.ConnectInput(in1); 
+                    alu.InputY.ConnectInput(in2);
+                    Wire userWire1 = new Wire();
+                    Wire userWire2 = new Wire();
+                    Wire userWire3 = new Wire();
+                    Wire userWire4 = new Wire();
+                    Wire userWire5 = new Wire();
+                    Wire userWire6 = new Wire();
+                    Wire userWire7 = new Wire();
+
+
+                    Console.Write("Enter ZX value: ");
+                    userWire1.Value = Convert.ToInt32(Console.ReadLine());
+                    alu.ZeroX.ConnectInput(userWire1);
+
+                    Console.Write("Enter NX value: ");
+                    userWire2.Value = Convert.ToInt32(Console.ReadLine());
+                    alu.NotX.ConnectInput(userWire2);
+
+                    Console.Write("Enter ZY value: ");
+                    userWire3.Value = Convert.ToInt32(Console.ReadLine());
+                    alu.ZeroY.ConnectInput(userWire3);
+
+                    Console.Write("Enter NY value: ");
+                    userWire4.Value = Convert.ToInt32(Console.ReadLine());
+                    alu.NotY.ConnectInput(userWire4);
+
+                    Console.Write("Enter F value: ");
+                    userWire5.Value = Convert.ToInt32(Console.ReadLine());
+                    alu.F.ConnectInput(userWire5);
+
+                    Console.Write("Enter N value: ");
+                    userWire6.Value = Convert.ToInt32(Console.ReadLine());
+                    alu.NotOutput.ConnectInput(userWire6);
+
+                    Console.WriteLine();
+                    Console.Write("Data: ");
+                    Console.WriteLine(" ZX = " + alu.ZeroX + ";  NX = " + alu.NotX + ";  ZY = " + alu.ZeroY + ";  NY = " + alu.NotY + ";  F = " + alu.F + ";  N = " + alu.NotOutput + ".");
+                    Console.WriteLine();
+                    Console.WriteLine("output is Zero (no = 0/yes = 1): " + alu.Zero);
+                    Console.WriteLine("output is Negative (no = 0/yes = 1): " + alu.Negative);
+                    Console.WriteLine("output binary: " + alu.Output);
+                    Console.WriteLine("output decimal: " + alu.Output.Get2sComplement());
+                    Console.WriteLine("============================================================================");
+
                 }
             }
 

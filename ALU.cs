@@ -68,6 +68,10 @@ namespace Components
             BitwiseNotGate m_gNotFOut = new BitwiseNotGate(Size); // reverse F output
             BitwiseMux m_gN = new BitwiseMux(Size);
 
+            MultiBitAndGate m_gZeroAnd = new MultiBitAndGate(Size);
+            BitwiseNotGate m_gZeroNot = new BitwiseNotGate(Size);
+
+
             // connect inputX and input0 to ZX, connect ZXControl
             m_gZX.ConnectInput1(InputX);
             m_gZX.ConnectInput2(zeroForXY);
@@ -113,15 +117,87 @@ namespace Components
 
             // connect negativeIndicator to last Output wire
             Negative.ConnectInput(Output[Size - 1]);
-            // connect ZeroIndicator depending on if decimal representation is 0 or not
-            if (Output.Get2sComplement() == 0)
-                Zero.Value = 1;
-            else Zero.Value = 0;
+            // connect ZeroIndicator depending on zeroNot and zeroAnd concatenation 
+            m_gZeroNot.ConnectInput(Output);
+            m_gZeroAnd.ConnectInput(m_gZeroNot.Output);
+            Zero.ConnectInput(m_gZeroAnd.Output);
+
+
         }
 
         public override bool TestGate()
         {
-            throw new NotImplementedException();
+            int[] arrZX = new int[] { 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0 };
+            int[] arrNX = new int[] { 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1 };
+            int[] arrZY = new int[] { 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0 };
+            int[] arrNY = new int[] { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1 };
+            int[] arrF = new int[] { 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 };
+            int[] arrNO = new int[] { 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1 };
+
+            InputX = new WireSet(Size);
+            InputY = new WireSet(Size);
+            Random rand = new Random();
+
+            WireSet[] answer = new WireSet[arrZX.Length];
+            for (int i = 0; i < answer.Length; i++)
+                answer[i] = new WireSet(Size);
+            answer[0].Set2sComplement(0);
+            answer[1].Set2sComplement(1);
+            answer[2].Set2sComplement(-1);
+
+            for (int i = 0; i < arrZX.Length; i++)
+            {
+                int num1 = rand.Next((-(int)Math.Pow(2, Size - 1)), ((int)Math.Pow(2, Size - 1) - 1) + 1);
+                int num2 = rand.Next((-(int)Math.Pow(2, Size - 1)), ((int)Math.Pow(2, Size - 1) - 1) + 1);                
+                InputX.Set2sComplement(num1);
+                InputY.Set2sComplement(num2);
+
+                ZeroX.Value = arrZX[i];
+                NotX.Value = arrNX[i];
+                ZeroY.Value = arrZY[i];
+                NotY.Value = arrNY[i];
+                F.Value = arrF[i];
+                NotOutput.Value = arrNO[i];
+
+                if (Negative.Value != Output[Size - 1].Value)
+                    return false;
+                if (Output.Get2sComplement() == 0 && Zero.Value != 1)
+                    return false;
+                if (Output.Get2sComplement() != 0 && Zero.Value != 0)
+                    return false;
+
+
+                answer[3].Set2sComplement(num1);
+                answer[4].Set2sComplement(num2);
+                BitwiseNotGate tempGX = new BitwiseNotGate(Size);
+                tempGX.ConnectInput(InputX);
+                answer[5].ConnectInput(tempGX.Output);
+                BitwiseNotGate tempGY = new BitwiseNotGate(Size);
+                tempGY.ConnectInput(InputY);
+                answer[6].ConnectInput(tempGY.Output);
+                answer[7].Set2sComplement(-num1);
+                answer[8].Set2sComplement(-num2);
+                answer[9].Set2sComplement(num1 + 1);
+                answer[10].Set2sComplement(num2 + 1);
+                answer[11].Set2sComplement(num1 - 1);
+                answer[12].Set2sComplement(num2 - 1);
+                answer[13].Set2sComplement(num1 + num2);
+                answer[14].Set2sComplement(num1 - num2);
+                answer[15].Set2sComplement(num2 - num1);
+                BitwiseAndGate tempGAnd = new BitwiseAndGate(Size);
+                tempGAnd.ConnectInput1(InputX);
+                tempGAnd.ConnectInput2(InputY);
+                answer[16].ConnectInput(tempGAnd.Output);
+                answer[17].ConnectInput(Output);
+
+                for (int j = 0; j < Size; j++)
+                {
+                    if (answer[i][j].Value != Output[j].Value)
+                        return false;
+                }
+            }
+            return true;
+                                          
         }
     }
 }
