@@ -16,6 +16,7 @@ namespace Components
         //Word size - number of bits in the register
         public int Size { get; private set; }
 
+        private SingleBitRegister[] m_rSingle;
 
         public MultiBitRegister(int iSize)
         {
@@ -24,7 +25,14 @@ namespace Components
             Output = new WireSet(Size);
             Load = new Wire();
             //your code here
-
+            m_rSingle = new SingleBitRegister[Size];
+            for (int i = 0; i < Size; i++)
+            {
+                m_rSingle[i] = new SingleBitRegister();
+                m_rSingle[i].ConnectLoad(Load);
+                m_rSingle[i].ConnectInput(Input[i]);
+                Output[i].ConnectInput(m_rSingle[i].Output);
+            }
         }
 
         public void ConnectInput(WireSet wsInput)
@@ -41,7 +49,42 @@ namespace Components
 
         public override bool TestGate()
         {
-            throw new NotImplementedException();
+            Random rand = new Random();
+            WireSet randWire = new WireSet(Size);
+
+            for (int i = 0; i < 1000; i++)
+            {
+                int num = (int)rand.Next((int)Math.Pow(2, Size - 1), ((int)Math.Pow(2, Size - 1) - 1));
+                randWire.Set2sComplement(num);
+
+                Input.ConnectInput(randWire);
+                Load.Value = 1;
+
+                Clock.ClockDown();
+                Clock.ClockUp();
+
+                Load.Value = 0;
+                Input.Set2sComplement((int)Math.Pow(2, Size));
+                if (randWire.Get2sComplement() != Output.Get2sComplement())
+                    return false;
+
+                Clock.ClockDown();
+                Clock.ClockUp();
+
+                if (randWire.Get2sComplement() != Output.Get2sComplement())
+                    return false;
+
+                Load.Value = 1;
+
+                Clock.ClockDown();
+                Clock.ClockUp();
+
+                if (Input.Get2sComplement() != Output.Get2sComplement())
+                    return false;
+            }
+
+            return true;
+
         }
     }
 }

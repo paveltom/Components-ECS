@@ -197,8 +197,11 @@ namespace Components
             //}
 
 
-            MultiBitAdder mbAdder = new MultiBitAdder(8);
-            Console.WriteLine(mbAdder.TestGate());
+            SingleBitRegister sbr = new SingleBitRegister();
+            Console.WriteLine("single bit register testGate: " + sbr.TestGate());
+
+
+
 
 
 
@@ -208,7 +211,7 @@ namespace Components
 
             //exit point if needed:
             //Console.WriteLine("press any key to exit...");
-            //Console.ReadKey();
+            Console.ReadKey();
         }
 
     }
