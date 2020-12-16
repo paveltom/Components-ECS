@@ -199,12 +199,21 @@ namespace Components
 
             SingleBitRegister sbr = new SingleBitRegister();
             Console.WriteLine("single bit register testGate: " + sbr.TestGate());
+            Console.WriteLine("============================================================================");
 
             Console.Write("Enter num of multibitRegister bits: ");
             int multiLength = Convert.ToInt32(Console.ReadLine());
             MultiBitRegister mbr = new MultiBitRegister(multiLength);
             Console.WriteLine("multi bit register testGate: " + mbr.TestGate());
+            Console.WriteLine("============================================================================");
 
+
+            Console.Write("Enter WordSize bits: ");
+            int wordsize = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Enter AddressSize bits: ");
+            int addresssize = Convert.ToInt32(Console.ReadLine());
+            Memory mmry = new Memory(addresssize, wordsize);
+            Console.WriteLine("memory testGate: " + mmry.TestGate());
 
 
 
