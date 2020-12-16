@@ -51,20 +51,22 @@ namespace Components
         {
             Random rand = new Random();
             WireSet randWire = new WireSet(Size);
+            WireSet maxWire = new WireSet(Size);
+            maxWire.Set2sComplement((int)Math.Pow(2, Size - 1) - 1);
 
             for (int i = 0; i < 1000; i++)
             {
-                int num = (int)rand.Next((int)Math.Pow(2, Size - 1), ((int)Math.Pow(2, Size - 1) - 1));
+                int num = (int)rand.Next(-(int)Math.Pow(2, Size - 1), ((int)Math.Pow(2, Size - 1) - 1));
                 randWire.Set2sComplement(num);
 
-                Input.ConnectInput(randWire);
+                Input.Set2sComplement(randWire.Get2sComplement());
                 Load.Value = 1;
 
                 Clock.ClockDown();
                 Clock.ClockUp();
 
                 Load.Value = 0;
-                Input.Set2sComplement((int)Math.Pow(2, Size));
+                Input.Set2sComplement(maxWire.Get2sComplement());
                 if (randWire.Get2sComplement() != Output.Get2sComplement())
                     return false;
 

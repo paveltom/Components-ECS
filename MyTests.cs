@@ -200,6 +200,10 @@ namespace Components
             SingleBitRegister sbr = new SingleBitRegister();
             Console.WriteLine("single bit register testGate: " + sbr.TestGate());
 
+            Console.Write("Enter num of multibitRegister bits: ");
+            int multiLength = Convert.ToInt32(Console.ReadLine());
+            MultiBitRegister mbr = new MultiBitRegister(multiLength);
+            Console.WriteLine("multi bit register testGate: " + mbr.TestGate());
 
 
 
